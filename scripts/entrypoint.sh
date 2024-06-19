@@ -65,7 +65,6 @@ echo "Running certbot"
 certbot_args=(
   certonly
   --standalone
-  --renew-by-default
   --non-interactive
   --agree-tos
   --cert-name "$CERT_NAME"
