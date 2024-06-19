@@ -38,7 +38,7 @@ volumes:
 
 services:
   nginx:
-    image: fedorov-xyz/enhanced-nginx:latest
+    image: ghcr.io/fedorov-xyz/enhanced-nginx:latest
     ports:
       - 80:80
       - 443:443
