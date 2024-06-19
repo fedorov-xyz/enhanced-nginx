@@ -36,13 +36,8 @@ mkdir -p /nginx-config/stream
 mkdir -p /etc/nginx/conf.d
 mkdir -p /etc/nginx/stream.d
 
-if [ -d "/nginx-config/conf" ] && [ "$(ls -A /nginx-config/conf)" ]; then
-  cp -r /nginx-config/conf/* /etc/nginx/conf.d/
-fi
-
-if [ -d "/nginx-config/stream" ] && [ "$(ls -A /nginx-config/stream)" ]; then
-  cp -r /nginx-config/stream/* /etc/nginx/stream.d/
-fi
+cp -r /nginx-config/conf/* /etc/nginx/conf.d/ 2>/dev/null
+cp -r /nginx-config/stream/* /etc/nginx/stream.d/ 2>/dev/null
 
 # Applying replacements for site configs
 
