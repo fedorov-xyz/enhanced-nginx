@@ -29,7 +29,18 @@ You should use the following lines in your nginx config for the site. `REPLACEME
 
 If you want to serve multiple domains within a container, list their domains in the `SITE_DOMAINS` environment variable. A common certificate will be issued for them.
 
-Example configuration for Docker Compose:
+### Directories for your configs
+
+You can include your configuration via mounting configs to container's special paths. It could be virtual server blocks or additional `http` section configuration (such as `log_format` directive). 
+
+| Path                    | Description                                              |
+|-------------------------|----------------------------------------------------------|
+| `/nginx-config/conf/`   | Will be included into `http` section of the Nginx config |
+| `/nginx-config/stream/` | -> `stream` section                                      |
+
+### Example
+
+For Docker Compose:
 
 ```yaml filename="docker-compose.yml"
 volumes:
@@ -45,7 +56,7 @@ services:
     volumes:
       - nginx_data:/etc/nginx/data
       - letsencrypt_data:/etc/letsencrypt
-      - ./example.com.conf:/sites/example.com.conf
+      - ./example.com.conf:/nginx-config/conf/example.com.conf
     environment:
       - SITE_DOMAINS=example.com,staging.example.com
       - CERT_NAME=example.com

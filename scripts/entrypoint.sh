@@ -26,10 +26,20 @@ if [ ! -f $CLOUDFLARE_FILE_PATH ]; then
     /usr/local/bin/update_cloudflare_ips.sh
 fi
 
-# Applying replacements for site configs
+# Create user config directories in case they have not been mounted into the container
 
-mkdir -p /etc/nginx/sites.d
-cp -r /sites/* /etc/nginx/sites.d/
+mkdir -p /nginx-config/conf
+mkdir -p /nginx-config/stream
+
+# Copy user configs
+
+mkdir -p /etc/nginx/conf.d
+mkdir -p /etc/nginx/stream.d
+
+cp -r /nginx-config/conf/* /etc/nginx/conf.d/
+cp -r /nginx-config/stream/* /etc/nginx/stream.d/
+
+# Applying replacements for site configs
 
 declare -a replacements=(
   "CERT_NAME"
@@ -39,10 +49,9 @@ for env in "${replacements[@]}"
 do
    if [ -n "${!env}" ]; then
       replacement=$(printf "%s" "${!env}" | sed 's/[,\/&]/\\&/g')  # Escape special characters in the replacement value
-      for file in /etc/nginx/sites.d/*; do
+      for file in /etc/nginx/conf.d/*; do
           sed -i "s,REPLACEMENT_$env,$replacement,g" "$file" || exit
       done
-      echo " $env is updated in sites.d"
    fi
 done
 
