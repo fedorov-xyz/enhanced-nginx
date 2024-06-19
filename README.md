@@ -58,6 +58,7 @@ services:
       - letsencrypt_data:/etc/letsencrypt
       - ./example.com.conf:/nginx-config/conf/example.com.conf
     environment:
+      - TZ=UTC
       - SITE_DOMAINS=example.com,staging.example.com
       - CERT_NAME=example.com
       - CERTBOT_EMAIL=your@email.com
@@ -66,9 +67,10 @@ services:
 
 ## Environment variables list
 
-| Variable             | Requirded | Description                                                  |
-|----------------------|-----------|--------------------------------------------------------------|
+| Variable             | Requirded | Description                                                   |
+|----------------------|-----------|---------------------------------------------------------------|
+| `TZ`                 |           | Timezone                                                      |
 | `SITE_DOMAINS`       | yes       | Сomma-separated list of domains for Let's Encrypt certificate |
-| `CERT_NAME`          | yes       | Certificate name.                                            |
-| `CERTBOT_EMAIL`      | yes       | Email for Let's Encrypt.                                     |
-| `CERTBOT_TEST_CERT`  |           | Pass `true` for test certificates.                           |
+| `CERT_NAME`          | yes       | Certificate name.                                             |
+| `CERTBOT_EMAIL`      | yes       | Email for Let's Encrypt.                                      |
+| `CERTBOT_TEST_CERT`  |           | Pass `true` for test certificates.                            |
