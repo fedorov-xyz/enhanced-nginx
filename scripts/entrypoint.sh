@@ -29,6 +29,7 @@ fi
 
 # Applying replacements for site configs
 
+mkdir -p /etc/nginx/sites.d
 cp -r /sites/* /etc/nginx/sites.d/
 
 declare -a replacements=(
