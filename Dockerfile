@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 WORKDIR /etc/nginx/
 
+# Remove default conf as we don't use it
+RUN rm -rf conf.d
+
 COPY nginx/nginxconfig.io/ ./nginxconfig.io
 COPY nginx/nginx.conf .
 
