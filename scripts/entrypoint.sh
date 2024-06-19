@@ -1,22 +1,21 @@
 #!/bin/bash
 
 # Static
-DOCKER_DATA=/etc/nginx/data
+mkdir -p /etc/nginx/data
+
 CLOUDFLARE_FILE_PATH=/etc/nginx/data/cloudflare.conf
-DHPARAMS_FILE_PATH=$DOCKER_DATA/dhparams.pem
+DHPARAMS_FILE_PATH=/etc/nginx/data/dhparam.pem
 
 # External
 : "${SITE_DOMAINS:?Must provide SITE_DOMAINS in environment}"
 : "${CERT_NAME:?Must provide CERT_NAME in environment}"
 : "${CERTBOT_EMAIL:?Must provide CERTBOT_EMAIL in environment}"
 
-mkdir -p $DOCKER_DATA;
-
 echo "Init nginx container"
 
-# Generate dhparams.pem
+# Generate dhparam.pem
 if [ ! -f $DHPARAMS_FILE_PATH ]; then
-    echo "Generate dhparams.pem"
+    echo "Generate dhparam.pem"
     openssl dhparam -out $DHPARAMS_FILE_PATH 2048
     chmod 600 $DHPARAMS_FILE_PATH
 fi
