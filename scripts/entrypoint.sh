@@ -13,6 +13,12 @@ DHPARAMS_FILE_PATH=/etc/nginx/data/dhparam.pem
 
 echo "Init nginx container"
 
+# Set TZ
+if [[ -n "${TZ}" ]]; then
+    cp /usr/share/zoneinfo/"${TZ}" /etc/localtime
+    echo "${TZ}" >/etc/timezone
+fi
+
 # Generate dhparam.pem
 if [ ! -f $DHPARAMS_FILE_PATH ]; then
     echo "Generate dhparam.pem"
